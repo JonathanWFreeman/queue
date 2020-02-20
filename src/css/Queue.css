@@ -1,0 +1,20 @@
+.userList {
+	display: flex;
+	justify-content: center;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+.userList li {
+	background: #555;
+	padding: 10px;
+	margin-top: 5px;
+	border-radius: 5px;
+}
+
+li {
+	text-align: center;
+}
