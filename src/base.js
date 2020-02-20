@@ -3,8 +3,8 @@ import firebase from 'firebase';
 
 const firebaseApp = firebase.initializeApp({
 	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-	authDomain: 'atomic-rush.firebaseapp.com',
-	databaseURL: 'https://atomic-rush.firebaseio.com',
+	authDomain: 'queue-af56a.firebaseapp.com',
+	databaseURL: 'https://queue-af56a.firebaseio.com/',
 	// projectId: 'atomic-rush',
 	storageBucket: 'atomic-rush.appspot.com'
 	// messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING,
