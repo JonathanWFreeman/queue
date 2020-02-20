@@ -10,6 +10,7 @@ vendor/
 /src/audio/
 config.php
 config.json
+.firebaserc
 
 # VSCode #
 ###################
