@@ -1,3 +1,7 @@
+Rename to .env
+Find these under Project Settings in firebase
+API_KEY = Web API key
+APPID = find after you setup an app under "Your apps"
+
 FIREBASE_API_KEY = 'key'
-FIREBASE_MESSAGING = 'key'
 FIREBASE_APPID = 'key'

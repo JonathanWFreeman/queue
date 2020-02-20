@@ -1,0 +1,8 @@
+rename to .firebaserc
+default: add whatever your database / project name is there
+
+{
+  "projects": {
+    "default": "project name goes here"
+  }
+}
