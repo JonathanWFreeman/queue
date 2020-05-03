@@ -7,11 +7,7 @@ export function getRandomNumber(arr) {
 export function getRandomAudio() {
 	const audio = [
 		'get_to_da_choppa',
-		'living_on_a_prayer_goat_edition',
-		'miley_cyrus_party_in_the_usa_goat_edition',
 		'more_cowbell_snl',
-		'rush_tom_sawyer',
-		'taylor_swift_trouble_goat_edition',
 	];
 
 	const getAudio = new Audio(`${cloudUrl}${getRandomNumber(audio)}.mp3`);

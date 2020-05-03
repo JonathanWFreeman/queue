@@ -108,8 +108,8 @@ class App extends React.Component {
 			// status is "granted", if accepted by user
 			const options = {
 				body: "You're up!",
-				image: require(`${cloudUrl}/notification_image.jpg`),
-				icon: require(`${cloudUrl}/queue_logo.png`) // optional
+				image: `${cloudUrl}/notification_image.jpg`,
+				icon: `${cloudUrl}/queue_logo.png` // optional
 			};
 
 			const notify = new Notification('Queue', options);
