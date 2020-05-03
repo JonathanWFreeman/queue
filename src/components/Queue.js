@@ -3,20 +3,12 @@ import PropTypes from 'prop-types';
 import { PrintQueue } from './PrintQueue';
 import '../css/Queue.css';
 
-/*TODO:
-
-assign user unique ID each connection (firebase .push()
-https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html)
- 
-Pass shifted user to display showing who is currently in Rush
-*/
-
 class Queue extends React.Component {
 
 	static propTypes = {
 		queue: PropTypes.array.isRequired,
-		getCurrentRushUser: PropTypes.func.isRequired,
-		rushState: PropTypes.func.isRequired,
+		getCurrentUser: PropTypes.func.isRequired,
+		queueState: PropTypes.func.isRequired,
 		// user: PropTypes.string.isRequired
 	}
 
@@ -27,11 +19,11 @@ class Queue extends React.Component {
 		// console.log(JSON.stringify(getCurrentUser));
 
 		// update current user state
-		this.props.getCurrentRushUser(getCurrentUser);
+		this.props.getCurrentUser(getCurrentUser);
 
-		// check if current user can go into rush
+		// check current user against top user in queue
 		if (getCurrentUser === this.props.user) {
-			this.props.rushState(false);
+			this.props.queueState(false);
 		}
 	}
 

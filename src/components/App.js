@@ -3,57 +3,50 @@ import base, { firebaseApp } from '../base';
 import { Nav } from './Nav';
 import CreateUser from './CreateUser';
 import Queue from './Queue';
-import { randomAudio, getCurrentTime } from '../helpers';
+import { getRandomAudio, getCurrentTime } from '../helpers';
 // import { webNotification } from './webNotification';
 import '../css/App.css';
 
-/*TODO: List 
- * 
- ** Loading State
- ** Dev / Production states
- ** Switch from starting off as not inrush, to being inrush unless in queue - might get rid of some issues with double checks
- * 
-*/
 class App extends React.Component {
 	state = {
-		inRush: true,
+		inQueue: true,
 		user: null,
 		userId: '',
-		currentRushUser: '',
+		currentUser: '',
 		alert: false,
 		queue: [],
 		timestamp: ''
 	};
 
-	rushToggle = () => {
+	queueToggle = () => {
 		this.setState(prevState => ({
-			inRush: !prevState.inRush
+			inQueue: !prevState.inQueue
 		}));
 	};
 
-	rushState = inRush => {
+	queueState = inQueue => {
 		// get current state
-		let currentState = this.state.inRush;
+		let currentState = this.state.inQueue;
 
 		// check so we're not constantly updating state
-		if (inRush !== currentState) {
-			this.setState({ inRush });
+		if (inQueue !== currentState) {
+			this.setState({ inQueue });
 			// Web Notification
 			this.requestDesktopNotificationPermission();
 			// Play Audio
-			randomAudio();
+			getRandomAudio();
 			// Set timestamp
 			this.setTimestamp(getCurrentTime());
 		}
 	};
 
-	getCurrentRushUser = user => {
+	getCurrentUser = user => {
 		// get current state
-		let currentState = this.state.currentRushUser;
+		let currentState = this.state.currentUser;
 
 		// check so we're not constantly updating state
 		if (user !== currentState) {
-			this.setState({ currentRushUser: user });
+			this.setState({ currentUser: user });
 
 			this.getTimestamp();
 		}
@@ -102,7 +95,7 @@ class App extends React.Component {
 		userConnectedRef.on('value', function(snap) {
 			if (snap.val()) {
 				userIdRef.onDisconnect().remove();
-				userIdRef.set({ user: user });
+				userIdRef.set({ user });
 			} else {
 				console.log('Connection Issue');
 			}
@@ -110,19 +103,20 @@ class App extends React.Component {
 	};
 
 	requestDesktopNotificationPermission() {
+		const cloudUrl = 'https://res.cloudinary.com/jwfreeman/image/upload/v1588478101/Queue/images';
 		if (window.Notification && Notification.permission !== 'denied') {
 			// status is "granted", if accepted by user
 			const options = {
-				body: "It's Rush Time!",
-				image: require('../images/jerms.jpg'),
-				icon: require('../images/adc_logo.png') // optional
+				body: "You're up!",
+				image: require(`${cloudUrl}/notification_image.jpg`),
+				icon: require(`${cloudUrl}/queue_logo.png`) // optional
 			};
 
-			const notify = new Notification('Atomic Rush', options);
+			const notify = new Notification('Queue', options);
 
 			notify.onclick = e => {
 				e.preventDefault(); // prevent the browser from focusing the Notification's tab
-				window.open('https://www.semrush.com', '_blank');
+				window.open('https://www.google.com', '_blank');
 			};
 		}
 	}
@@ -135,12 +129,6 @@ class App extends React.Component {
 			this.setState({ user: localStorageUserRef });
 			this.updateUser(localStorageUserRef);
 		}
-
-		// Toggle Rush
-		// base.syncState(`rushToggle`, {
-		// 	context: this,
-		// 	state: 'inRush'
-		// });
 
 		// Listen to Queue
 		base.bindToState('user', {
@@ -155,29 +143,25 @@ class App extends React.Component {
 		}
 	}
 
-	// const itemsRef = firebaseApp.database().ref('items');
-	// itemsRef.push(this.state.inRush);
-
 	render() {
 		return (
 			<React.Fragment>
 				<Nav user={this.state.user} />
-				<h1>Anyone In Rush?</h1>
+				<h1>Get In Line</h1>
 				<div className='container currentUser'>
 					<button
-						// onClick={this.rushToggle}
-						className={this.state.inRush ? 'buttonRed buttonRound' : 'buttonGreen buttonRound'}
+						className={this.state.inQueue ? 'buttonRed buttonRound' : 'buttonGreen buttonRound'}
 					/>
 					<p>
-						{this.state.currentRushUser}
+						{this.state.currentUser}
 						<span className='timestamp'>({this.state.timestamp})</span>
 					</p>
 				</div>
 				<div className='container center'>
-					{this.state.currentRushUser === this.state.user ? (
+					{this.state.currentUser === this.state.user ? (
 						<div className='center'>
-							<a target='_blank' rel='noopener noreferrer' href='https://www.semrush.com/'>
-								Login to Rush
+							<a target='_blank' rel='noopener noreferrer' href='https://www.google.com/'>
+								Login
 							</a>
 						</div>
 					) : null}
@@ -188,8 +172,8 @@ class App extends React.Component {
 				<Queue
 					queue={this.state.queue}
 					user={this.state.user}
-					rushState={this.rushState}
-					getCurrentRushUser={this.getCurrentRushUser}
+					queueState={this.queueState}
+					getCurrentUser={this.getCurrentUser}
 				/>
 			</React.Fragment>
 		);

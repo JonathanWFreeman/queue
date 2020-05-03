@@ -5,10 +5,7 @@ const firebaseApp = firebase.initializeApp({
 	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
 	authDomain: 'queue-af56a.firebaseapp.com',
 	databaseURL: 'https://queue-af56a.firebaseio.com/',
-	// projectId: 'atomic-rush',
-	storageBucket: 'atomic-rush.appspot.com'
-	// messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING,
-	// appId: process.env.REACT_APP_FIREBASE_APPID
+	storageBucket: 'queue-af56a.appspot.com'
 });
 
 const base = Rebase.createClass(firebaseApp.database());
